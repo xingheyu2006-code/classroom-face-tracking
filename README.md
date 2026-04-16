@@ -365,4 +365,4 @@ MIT License
 
 ## 联系方式
 
-如有问题或建议，欢迎提交Issue或Pull Request。
+如有问题或建议，邮箱为xingheyu2006@163.com
