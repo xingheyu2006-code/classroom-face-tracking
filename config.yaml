@@ -1,0 +1,122 @@
+# 教室人脸追踪系统配置文件
+
+# ==================== 检测配置 ====================
+detector:
+  # YOLO模型路径 (None表示使用默认模型)
+  model_path: null
+  
+  # 检测置信度阈值 (0-1)
+  # 教室场景建议0.3，以检测更多人脸
+  conf_threshold: 0.25
+  
+  # NMS IOU阈值
+  iou_threshold: 0.45
+  
+  # 输入图像大小
+  img_size: 640
+  
+  # 是否使用图像增强
+  use_enhancement: true
+
+# ==================== 跟踪配置 ====================
+tracker:
+  # DeepSORT参数
+  
+  # 跟踪器最大存活帧数
+  # 如果目标消失超过此帧数，则删除跟踪
+  max_age: 30
+  
+  # 确认跟踪所需的最小命中次数
+  min_hits: 3
+  
+  # IOU匹配阈值
+  iou_threshold: 0.3
+  
+  # 最大余弦距离 (外观特征匹配)
+  max_cosine_distance: 0.2
+  
+  # 特征库预算
+  nn_budget: 100
+
+# ==================== 卡尔曼滤波配置 ====================
+kalman_filter:
+  # 过程噪声
+  process_noise: 0.01
+  
+  # 测量噪声
+  measurement_noise: 10.0
+  
+  # 初始不确定性
+  initial_uncertainty: 1000.0
+
+# ==================== 特征提取配置 ====================
+feature_extractor:
+  # 特征相似度阈值
+  # 高于此阈值认为是同一人
+  similarity_threshold: 0.6
+  
+  # 时间窗口大小 (帧数)
+  temporal_window_size: 30
+
+# ==================== 档案配置 ====================
+archive:
+  # 档案存储目录
+  archive_dir: "./archives"
+  
+  # 最大人脸样本数
+  max_face_samples: 10
+  
+  # 最大轨迹点数
+  max_trajectory_points: 1000
+  
+  # 最大特征向量数
+  max_features: 1000
+
+# ==================== 输出配置 ====================
+output:
+  # 是否保存输出视频
+  save_video: true
+  
+  # 输出视频路径
+  output_video_path: "./output.mp4"
+  
+  # 是否显示实时画面
+  show_display: true
+  
+  # 是否生成热力图
+  generate_heatmap: true
+  
+  # 是否生成分析报告
+  generate_report: true
+
+# ==================== 设备配置 ====================
+device:
+  # 计算设备 (cuda/cpu/null表示自动选择)
+  device: null
+  
+  # 是否使用半精度 (仅CUDA)
+  half_precision: false
+
+# ==================== 教室场景特定配置 ====================
+classroom:
+  # 教室布局 (用于空间分析)
+  # 假设教室为矩形，定义四个角点坐标
+  layout:
+    front_left: [0, 0]
+    front_right: [1920, 0]
+    back_left: [0, 1080]
+    back_right: [1920, 1080]
+  
+  # 座位区域 (可选，用于座位分析)
+  seat_regions: []
+  
+  # 期望的学生人数
+  expected_student_count: 40
+  
+  # 注意力分析配置
+  attention:
+    # 是否启用注意力分析
+    enabled: false
+    
+    # 注意力阈值
+    threshold: 0.5
